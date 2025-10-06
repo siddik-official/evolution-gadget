@@ -26,7 +26,7 @@ const Login: React.FC = () => {
   return (
     <div className="login-page">
       <div className="login-container">
-        <h2>Login</h2>
+        <h2 className="gradient-text" style={{ fontSize: '2rem', marginBottom: '1.5rem', textAlign: 'center' }}>Welcome Back</h2>
         {error && <div className="error">{error}</div>}
         <form onSubmit={handleSubmit}>
           <div className="form-group">
@@ -55,8 +55,8 @@ const Login: React.FC = () => {
             {loading ? 'Logging in...' : 'Login'}
           </button>
         </form>
-        <p>
-          Don't have an account? <a href="/register">Register here</a>
+        <p style={{ marginTop: '1.5rem', textAlign: 'center', color: '#6b7280' }}>
+          Don't have an account? <a href="/register" style={{ color: '#667eea', fontWeight: '600', textDecoration: 'none' }}>Register here</a>
         </p>
       </div>
     </div>

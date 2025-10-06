@@ -35,7 +35,7 @@ const Register: React.FC = () => {
   return (
     <div className="register-page">
       <div className="register-container">
-        <h2>Register</h2>
+        <h2 className="gradient-text" style={{ fontSize: '2rem', marginBottom: '1.5rem', textAlign: 'center' }}>Create Account</h2>
         {error && <div className="error">{error}</div>}
         <form onSubmit={handleSubmit}>
           <div className="form-group">
@@ -86,8 +86,8 @@ const Register: React.FC = () => {
             {loading ? 'Creating Account...' : 'Register'}
           </button>
         </form>
-        <p>
-          Already have an account? <a href="/login">Login here</a>
+        <p style={{ marginTop: '1.5rem', textAlign: 'center', color: '#6b7280' }}>
+          Already have an account? <a href="/login" style={{ color: '#667eea', fontWeight: '600', textDecoration: 'none' }}>Login here</a>
         </p>
       </div>
     </div>

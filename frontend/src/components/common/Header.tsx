@@ -4,16 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState, AppDispatch } from '../../store';
 import { logout } from '../../store/slices/authSlice';
 import { UserRole } from '../../types';
-import { 
-  ShoppingCart, 
-  User, 
-  Search, 
-  Menu, 
-  LogOut, 
-  Shield,
-  Home,
-  Package
-} from 'lucide-react';
+import { ShoppingCart, User, Search, Menu, LogOut, Shield, Hop as Home, Package } from 'lucide-react';
 
 const Header: React.FC = () => {
   const navigate = useNavigate();
@@ -50,7 +41,6 @@ const Header: React.FC = () => {
               <input
                 type="text"
                 className="search-input"
-                placeholder="Search entire store here..."
                 placeholder="Search gadgets..."
                 onKeyPress={(e) => {
                   if (e.key === 'Enter') {
