@@ -1,4 +1,4 @@
-# Evulation Gadget - Full-Stack E-Commerce Platform
+# Evolution Gadget - Full-Stack E-Commerce Platform
 
 A modern, scalable e-commerce platform specialized in gadget sales and evaluations, built with React TypeScript frontend and Node.js Express TypeScript backend.
 
