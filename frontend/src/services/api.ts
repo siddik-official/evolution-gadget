@@ -2,11 +2,10 @@ import axios, { AxiosResponse } from 'axios';
 import { 
   ILoginCredentials, 
   IRegisterData, 
-  IAuthResponse, 
-  IUser, 
+  IAuthAPIResponse,
+  IUser,
   IGadget,
-  IApiResponse,
-  IPagination
+  IApiResponse
 } from '../types';
 
 // Create axios instance
@@ -46,10 +45,10 @@ api.interceptors.response.use(
 
 // Auth API
 export const authAPI = {
-  login: (credentials: ILoginCredentials): Promise<AxiosResponse<IAuthResponse>> =>
+  login: (credentials: ILoginCredentials): Promise<AxiosResponse<IAuthAPIResponse>> =>
     api.post('/auth/login', credentials),
     
-  register: (userData: IRegisterData): Promise<AxiosResponse<IAuthResponse>> =>
+  register: (userData: IRegisterData): Promise<AxiosResponse<IAuthAPIResponse>> =>
     api.post('/auth/register', userData),
     
   getProfile: (): Promise<AxiosResponse<IUser>> =>

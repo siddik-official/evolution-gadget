@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { IAuthState, IUser, ILoginCredentials, IRegisterData, IAuthResponse } from '../../types';
+import { IAuthState, IUser, ILoginCredentials, IRegisterData } from '../../types';
 import { authAPI } from '../../services/api';
 
 // Initial state
@@ -17,8 +17,12 @@ export const loginUser = createAsyncThunk(
   async (credentials: ILoginCredentials, { rejectWithValue }) => {
     try {
       const response = await authAPI.login(credentials);
-      localStorage.setItem('token', response.data.token);
-      return response.data;
+      console.log('Login API response:', response.data);
+      
+      // Backend returns: { success: true, data: { token, user } }
+      const { data } = response.data;
+      localStorage.setItem('token', data.token);
+      return data; // Returns { token, user }
     } catch (error: any) {
       return rejectWithValue(error.response?.data?.message || 'Login failed');
     }
@@ -30,8 +34,12 @@ export const registerUser = createAsyncThunk(
   async (userData: IRegisterData, { rejectWithValue }) => {
     try {
       const response = await authAPI.register(userData);
-      localStorage.setItem('token', response.data.token);
-      return response.data;
+      console.log('Register API response:', response.data);
+      
+      // Backend returns: { success: true, data: { token, user } }
+      const { data } = response.data;
+      localStorage.setItem('token', data.token);
+      return data; // Returns { token, user }
     } catch (error: any) {
       return rejectWithValue(error.response?.data?.message || 'Registration failed');
     }
@@ -96,6 +104,10 @@ const authSlice = createSlice({
         state.error = null;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
+        console.log('Login fulfilled - payload:', action.payload);
+        console.log('User from payload:', action.payload.user);
+        console.log('User role:', action.payload.user?.role);
+        
         state.loading = false;
         state.isAuthenticated = true;
         state.user = action.payload.user;

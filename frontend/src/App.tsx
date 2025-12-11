@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from './store';
 import { loadUser } from './store/slices/authSlice';
@@ -11,9 +11,21 @@ import Register from './components/Register';
 import ProtectedRoute from './components/ProtectedRoute';
 import { UserRole } from './types';
 
+// Admin Pages
+import AdminLogin from './pages/admin/AdminLogin';
+import AdminDashboard from './pages/admin/AdminDashboard';
+import AdminProducts from './pages/admin/AdminProducts';
+import AdminCustomers from './pages/admin/AdminCustomers';
+import AdminOrders from './pages/admin/AdminOrders';
+import AdminChat from './pages/admin/AdminChat';
+
 const App: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const location = useLocation();
   const { isAuthenticated, loading } = useSelector((state: RootState) => state.auth);
+
+  // Check if current route is an admin route
+  const isAdminRoute = location.pathname.startsWith('/admin');
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -32,7 +44,7 @@ const App: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header />
+      {!isAdminRoute && <Header />}
       
       <main className="flex-1">
         <Routes>
@@ -51,11 +63,52 @@ const App: React.FC = () => {
           />
           
           {/* Admin Routes */}
+          <Route path="/admin/login" element={<AdminLogin />} />
           <Route
-            path="/admin/*"
+            path="/admin"
             element={
               <ProtectedRoute requiredRole={UserRole.ADMIN}>
-                <div>Admin Dashboard - Coming Soon</div>
+                <AdminDashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/dashboard"
+            element={
+              <ProtectedRoute requiredRole={UserRole.ADMIN}>
+                <AdminDashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/products"
+            element={
+              <ProtectedRoute requiredRole={UserRole.ADMIN}>
+                <AdminProducts />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/customers"
+            element={
+              <ProtectedRoute requiredRole={UserRole.ADMIN}>
+                <AdminCustomers />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/orders"
+            element={
+              <ProtectedRoute requiredRole={UserRole.ADMIN}>
+                <AdminOrders />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/chat"
+            element={
+              <ProtectedRoute requiredRole={UserRole.ADMIN}>
+                <AdminChat />
               </ProtectedRoute>
             }
           />
@@ -64,7 +117,7 @@ const App: React.FC = () => {
         </Routes>
       </main>
 
-      <Footer />
+      {!isAdminRoute && <Footer />}
     </div>
   );
 };

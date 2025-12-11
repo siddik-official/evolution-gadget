@@ -51,23 +51,46 @@ export const register = asyncHandler(async (req: Request, res: Response) => {
 export const login = asyncHandler(async (req: Request, res: Response) => {
   const { email, password }: ILoginCredentials = req.body;
 
+  // Debug logging
+  console.log('=================================');
+  console.log('Login attempt:');
+  console.log('Email received:', email);
+  console.log('Email length:', email?.length);
+  console.log('Password received:', password ? '***' + password.substring(password.length - 3) : 'none');
+  console.log('Password length:', password?.length);
+  console.log('=================================');
+
   // Find user with password field
   const user = await User.findOne({ email: email.toLowerCase() }).select('+password');
 
+  console.log('User found?', !!user);
+  if (user) {
+    console.log('User email from DB:', user.email);
+    console.log('User role:', user.role);
+    console.log('User active?', user.isActive);
+  }
+
   if (!user) {
+    console.log('❌ User not found with email:', email.toLowerCase());
     throw new AppError('Invalid email or password', 401, 'INVALID_CREDENTIALS');
   }
 
   // Check if account is active
   if (!user.isActive) {
+    console.log('❌ Account deactivated');
     throw new AppError('Account is deactivated', 401, 'ACCOUNT_DEACTIVATED');
   }
 
   // Check password
   const isPasswordValid = await user.comparePassword(password);
+  console.log('Password valid?', isPasswordValid);
+  
   if (!isPasswordValid) {
+    console.log('❌ Password check failed');
     throw new AppError('Invalid email or password', 401, 'INVALID_CREDENTIALS');
   }
+
+  console.log('✅ Login successful for:', user.email);
 
   // Generate JWT token
   const token = generateToken({

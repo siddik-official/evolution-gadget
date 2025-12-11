@@ -1,6 +1,7 @@
 import express, { Application, Request, Response } from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
+import mongoose from 'mongoose';
 import { connectDatabase, checkDatabaseHealth } from '@/utils/database';
 import { errorHandler, notFoundHandler } from '@/middleware/errorHandler';
 import { 
@@ -77,8 +78,29 @@ const createApp = (): Application => {
  */
 const startServer = async (): Promise<void> => {
   try {
+    console.log('🔄 Starting server...');
+    console.log('🔄 Connecting to MongoDB...');
+    
     // Connect to database
     await connectDatabase();
+    
+    // Verify MongoDB connection
+    const dbState = mongoose.connection.readyState;
+    const dbStates = {
+      0: '❌ Disconnected',
+      1: '✅ Connected',
+      2: '🔄 Connecting',
+      3: '⚠️ Disconnecting'
+    };
+    
+    console.log(`📊 MongoDB Status: ${dbStates[dbState as keyof typeof dbStates] || 'Unknown'}`);
+    
+    if (dbState !== 1) {
+      throw new Error('MongoDB connection failed - server cannot start');
+    }
+    
+    console.log(`📊 MongoDB Database: ${mongoose.connection.db.databaseName}`);
+    console.log(`📊 MongoDB Host: ${mongoose.connection.host}`);
 
     // Create Express app
     const app = createApp();
@@ -89,9 +111,12 @@ const startServer = async (): Promise<void> => {
 
     // Start server
     const server = app.listen(PORT, HOST, () => {
+      console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
       console.log(`🚀 Server is running on http://${HOST}:${PORT}`);
       console.log(`📊 Health check available at http://${HOST}:${PORT}/health`);
       console.log(`🔧 Environment: ${process.env.NODE_ENV || 'development'}`);
+      console.log('✅ All systems operational');
+      console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
     });
 
     // Graceful shutdown
@@ -103,7 +128,6 @@ const startServer = async (): Promise<void> => {
         
         try {
           // Close database connection
-          const mongoose = await import('mongoose');
           await mongoose.connection.close();
           console.log('✅ Database connection closed');
           

@@ -84,6 +84,11 @@ UserSchema.pre<IUserDocument>('save', async function(next) {
   if (!this.isModified('password')) return next();
 
   try {
+    // Ensure password exists before hashing
+    if (!this.password) {
+      return next(new Error('Password is required'));
+    }
+    
     // Hash password with cost of 12
     const hashedPassword = await bcrypt.hash(this.password, 12);
     this.password = hashedPassword;

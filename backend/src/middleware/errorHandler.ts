@@ -63,9 +63,9 @@ export const errorHandler = (error: any, req: Request, res: Response, next: Next
   // Express validator errors
   if (error.array && typeof error.array === 'function') {
     const errors = error.array().map((err: ValidationError) => ({
-      field: err.param,
+      field: 'type' in err && err.type === 'field' ? err.path : 'unknown',
       message: err.msg,
-      value: err.value
+      value: 'value' in err ? err.value : undefined
     }));
 
     return res.status(400).json({

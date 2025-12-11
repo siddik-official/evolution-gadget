@@ -46,6 +46,12 @@ export interface IAuthResponse {
   user: Omit<IUser, 'password'>;
 }
 
+export interface IAuthAPIResponse {
+  success: boolean;
+  message: string;
+  data: IAuthResponse;
+}
+
 export interface IJWTPayload {
   userId: string;
   email: string;

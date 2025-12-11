@@ -1,8 +1,12 @@
-import mongoose, { Schema, Document } from 'mongoose';
+import mongoose, { Schema, Document, Types } from 'mongoose';
 import { ICart, ICartItem } from '@/types';
 
-// Define the CartItem schema
-const CartItemSchema = new Schema<ICartItem>({
+// Define the CartItem schema with proper typing
+interface ICartItemDocument extends Omit<ICartItem, 'gadgetId'> {
+  gadgetId: Types.ObjectId;
+}
+
+const CartItemSchema = new Schema<ICartItemDocument>({
   gadgetId: {
     type: Schema.Types.ObjectId,
     ref: 'Gadget',
@@ -22,7 +26,9 @@ const CartItemSchema = new Schema<ICartItem>({
 });
 
 // Define the Cart interface extending Document
-export interface ICartDocument extends Omit<ICart, '_id'>, Document {}
+export interface ICartDocument extends Omit<ICart, '_id' | 'userId'>, Document {
+  userId: Types.ObjectId;
+}
 
 // Define the Cart schema
 const CartSchema = new Schema<ICartDocument>(

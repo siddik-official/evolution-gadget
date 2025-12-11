@@ -13,7 +13,7 @@ const AddressSchema = new Schema<IAddress>({
 // Define the OrderItem schema
 const OrderItemSchema = new Schema<IOrderItem>({
   gadgetId: {
-    type: Schema.Types.ObjectId,
+    type: String,
     ref: 'Gadget',
     required: true
   },
@@ -35,7 +35,9 @@ const OrderItemSchema = new Schema<IOrderItem>({
 });
 
 // Define the Order interface extending Document
-export interface IOrderDocument extends Omit<IOrder, '_id'>, Document {}
+export interface IOrderDocument extends Omit<IOrder, '_id' | 'userId'>, Document {
+  userId: mongoose.Types.ObjectId;
+}
 
 // Generate order number
 function generateOrderNumber(): string {

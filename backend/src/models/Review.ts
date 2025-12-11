@@ -2,7 +2,10 @@ import mongoose, { Schema, Document } from 'mongoose';
 import { IReview } from '@/types';
 
 // Define the Review interface extending Document
-export interface IReviewDocument extends Omit<IReview, '_id'>, Document {}
+export interface IReviewDocument extends Omit<IReview, '_id' | 'userId' | 'gadgetId'>, Document {
+  userId: mongoose.Types.ObjectId;
+  gadgetId: mongoose.Types.ObjectId;
+}
 
 // Define the Review schema
 const ReviewSchema = new Schema<IReviewDocument>(

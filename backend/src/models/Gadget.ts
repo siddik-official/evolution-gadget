@@ -8,7 +8,9 @@ const SpecificationSchema = new Schema<ISpecification>({
 });
 
 // Define the Gadget interface extending Document
-export interface IGadgetDocument extends Omit<IGadget, '_id'>, Document {}
+export interface IGadgetDocument extends Omit<IGadget, '_id'>, Omit<Document, 'model'> {
+  model: string;
+}
 
 // Define the Gadget schema
 const GadgetSchema = new Schema<IGadgetDocument>(

@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import jwt from 'jsonwebtoken';
+import jwt, { SignOptions } from 'jsonwebtoken';
 import { User } from '@/models/User';
 import { IJWTPayload, UserRole } from '@/types';
 
@@ -208,11 +208,12 @@ function extractToken(req: Request): string | null {
  * Generate JWT token
  */
 export const generateToken = (payload: IJWTPayload): string => {
-  return jwt.sign(payload, process.env.JWT_SECRET as string, {
-    expiresIn: process.env.JWT_EXPIRES_IN || '7d',
+  const options: SignOptions = {
+    expiresIn: (process.env.JWT_EXPIRES_IN || '7d') as any,
     issuer: 'evulation-gadget',
     audience: 'evulation-gadget-users'
-  });
+  };
+  return jwt.sign(payload, process.env.JWT_SECRET as string, options);
 };
 
 /**
