@@ -84,6 +84,6 @@ This script will:
 ## Database Location:
 
 The admin user is stored in MongoDB Atlas:
-- Database: `evulation-gadget`
+- Database: `evolution-gadget`
 - Collection: `users`
 - Role: `admin`

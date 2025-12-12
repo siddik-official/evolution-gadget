@@ -9,7 +9,7 @@ interface DatabaseConfig {
  * Database configuration
  */
 const getDatabaseConfig = (): DatabaseConfig => {
-  const uri = process.env.MONGODB_URI || 'mongodb://localhost:27017/evulation-gadget';
+  const uri = process.env.MONGODB_URI || 'mongodb://localhost:27017/evolution-gadget';
   
   const options: mongoose.ConnectOptions = {
     // Connection options

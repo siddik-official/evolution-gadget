@@ -210,8 +210,8 @@ function extractToken(req: Request): string | null {
 export const generateToken = (payload: IJWTPayload): string => {
   const options: SignOptions = {
     expiresIn: (process.env.JWT_EXPIRES_IN || '7d') as any,
-    issuer: 'evulation-gadget',
-    audience: 'evulation-gadget-users'
+    issuer: 'evolution-gadget',
+    audience: 'evolution-gadget-users'
   };
   return jwt.sign(payload, process.env.JWT_SECRET as string, options);
 };

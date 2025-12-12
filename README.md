@@ -28,7 +28,7 @@ A modern, scalable e-commerce platform specialized in gadget sales and evaluatio
 ## 📁 Project Structure
 
 ```
-evulation-gadget/
+evolution-gadget/
 ├── backend/                    # Node.js Express TypeScript API
 │   ├── src/
 │   │   ├── controllers/       # Route controllers
@@ -87,7 +87,7 @@ evulation-gadget/
 ### 1. Clone the Repository
 ```bash
 git clone <repository-url>
-cd evulation-gadget
+cd evolution-gadget
 ```
 
 ### 2. Backend Setup
@@ -103,7 +103,7 @@ cp .env.example .env
 
 # Configure environment variables
 # Edit .env file with your settings:
-MONGODB_URI=mongodb://localhost:27017/evulation-gadget
+MONGODB_URI=mongodb://localhost:27017/evolution-gadget
 JWT_SECRET=your-super-secret-jwt-key
 JWT_EXPIRES_IN=7d
 PORT=5000
@@ -535,7 +535,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 For support and questions:
 - Create an issue in the repository
-- Email: support@evulation-gadget.com
+- Email: support@evolution-gadget.com
 - Documentation: [Wiki](../../wiki)
 
 ---

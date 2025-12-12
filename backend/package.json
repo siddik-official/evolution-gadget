@@ -1,7 +1,7 @@
 {
-  "name": "evulation-gadget-backend",
+  "name": "evolution-gadget-backend",
   "version": "1.0.0",
-  "description": "Backend API for Evulation Gadget e-commerce platform",
+  "description": "Backend API for Evolution Gadget e-commerce platform",
   "main": "dist/server.js",
   "scripts": {
     "start": "node dist/server.js",
@@ -23,7 +23,7 @@
     "typescript",
     "mongodb"
   ],
-  "author": "Evulation Gadget Team",
+  "author": "Evolution Gadget Team",
   "license": "MIT",
   "dependencies": {
     "bcryptjs": "^2.4.3",
